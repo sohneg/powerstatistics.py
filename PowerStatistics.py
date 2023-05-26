@@ -1,40 +1,46 @@
-#!/usr/bin/python3
-
 import time
 import psutil
 
-class PowerManagment:
+class PowerManagement:
     """
-    return cpu usage in percent
+    Return CPU usage in percent.
     """
     def get_cpu_percentage(self):
         return psutil.cpu_percent()
 
-    # return ram total in MB
+    # Return RAM total in MB.
     def get_ram_total(self):
         return round(psutil.virtual_memory().total / 1024 / 1024, 2)
 
-    # return ram used in MB
+    # Return RAM used in MB.
     def get_ram_used(self):
-        return round(psutil.virtual_memory().used / 1024 / 1024,2)
+        return round(psutil.virtual_memory().used / 1024 / 1024, 2)
 
-    # return current timestamp
+    # Return current timestamp.
     def get_timestamp(self):
         return time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
 
-    # return all values as json
-    def get_all_powerstatistics_json(self):
-        return {
-            "cpu": self.get_cpu_percentage(),
-            "ram_used": self.get_ram_used(),
-            "ram_total": self.get_ram_total(),
-            "timestamp": self.get_timestamp()
-        }
+    # Return all values as a StatisticObject instance.
+    def get_powerstatistic_object(self):
+        return StatisticObject(
+            self.get_timestamp(),
+            self.get_cpu_percentage(),
+            self.get_ram_used(),
+            self.get_ram_total()
+        )
 
-    # return all values as string
+    # Return all values as a string.
     def get_all_powerstatistics_string(self):
-        return "ram total: " + str(self.cpu()) + " MB,","ram total: "  + str(self.ram())+ " MB,", "ram used: " +str(self.ram_used())+ " MB,", str(self.timestamp())+" (UTC)"
+        return (
+            "RAM total: " + str(self.get_ram_total()) + " MB,",
+            "RAM used: " + str(self.get_ram_used()) + " MB,",
+            str(self.get_timestamp()) + " (UTC)"
+        )
 
 
-# class StatisticObject:
-    
+class StatisticObject:
+    def __init__(self, timestamp, cpu_percentage, ram_used, ram_total):
+        self.timestamp = timestamp
+        self.cpu_percentage = cpu_percentage
+        self.ram_used = ram_used
+        self.ram_total = ram_total
