@@ -44,3 +44,11 @@ class StatisticObject:
         self.cpu_percentage = cpu_percentage
         self.ram_used = ram_used
         self.ram_total = ram_total
+
+    def to_dict(self):
+        return {
+            'timestamp': self.timestamp,
+            'cpu_percentage': self.cpu_percentage,
+            'ram_used': self.ram_used,
+            'ram_total': self.ram_total
+        }

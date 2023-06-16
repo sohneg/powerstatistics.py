@@ -66,7 +66,6 @@ class PowerStatisticDatabase:
 
 
 
-
 # connect to db with connection string from env
 # client = MongoClient(os.environ.get('MONGO_CONNECTION_STRING'))
 
